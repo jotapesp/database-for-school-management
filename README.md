@@ -30,7 +30,8 @@ FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
 (@codigo_ibge, @nome, @latitude, @longitude, @capital, @codigo_uf, @siafi_id, @ddd, @fuso_horario)
-set idCity = @codigo_ibge, city_name = @nome, state_idState = @codigo_uf;```
+set idCity = @codigo_ibge, city_name = @nome, state_idState = @codigo_uf;
+```
 
   - [`script_queries.sql`](https://github.com/jotapesp/database-for-school-management/blob/main/script_queries.sql) - execute esse _script_ para extrair informações do Banco de Dados com a finalidade de testá-lo. As informações extraídas pelas queries contidas nesse _script_ são descritas mais adiante.
 
