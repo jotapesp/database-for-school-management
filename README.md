@@ -12,14 +12,32 @@ Esse é o projeto de Banco de Dados para gerenciamento escolar inicialmente conf
 (PT-BR)
 * Executar os scripts MySQL.
 * Cada um dos arquivos contidos nesse diretório são uma parte do script e estão descritos abaixo:
-  - [`script_criarDB.sql`](https://github.com/jotapesp/database-for-school-management) - execute esse _script_ em um servidor MySQL para criar o Banco de Dados chamado `school` populado com as tabelas que serão descritas mais adiante.
-  - [`script_persistenciadedados.sql`](https://github.com/jotapesp/database-for-school-management) - execute esse _script_ para popular o Banco de Dados com dados fictícios afim de testá-lo.
-  - [`script_queries.sql`](https://github.com/jotapesp/database-for-school-management) - execute esse _script_ para extrair informações do Banco de Dados com a finalidade de testá-lo. As informações extraídas pelas queries contidas nesse _script_ são descritas mais adiante.
+  - [`script_criarDB.sql`](https://github.com/jotapesp/database-for-school-management/blob/main/script_criarDB.sql) - execute esse _script_ em um servidor MySQL para criar o Banco de Dados chamado `school` populado com as tabelas que serão descritas mais adiante.
+  - [`script_persistenciadedados.sql`](https://github.com/jotapesp/database-for-school-management/blob/main/script_persistenciadedados.sql) - execute esse _script_ para popular o Banco de Dados com dados fictícios afim de testá-lo. Executar o _script_ por completo alimentará todo o banco de dados com informações para teste, como dados fictícios de pessoas (alunos, responsáveis, professores), matérias, cursos ofertados, notas, etc (tudo que é necessário para testar o banco de dados).
+    - ATENÇÃO: a persistência de dados para as tabelas Cidade e Estado pode ser feita de maneiras diferentes. Enquanto que o padrão do _script_ é adicionar apenas os dados necessários para as _queries_ em [`script_queries.sql`](https://github.com/jotapesp/database-for-school-management/blob/main/script_queries.sql), existem também 2 arquivos extras nesse repositório, [`municipios.csv`](https://github.com/jotapesp/database-for-school-management/blob/main/municipios.csv) e [`estados.csv`](https://github.com/jotapesp/database-for-school-management/blob/main/estados.csv), que contem informações de todas as cidades e estados do Brasil. Caso deseje alimentar o banco de dados com essas informações, uma instrução extra está contida no arquivo [`script_persistenciadedados.sql`](https://github.com/jotapesp/database-for-school-management/blob/main/script_persistenciadedados.sql). O usuário deve realizar o download dos arquivos [`municipios.csv`](https://github.com/jotapesp/database-for-school-management/blob/main/municipios.csv) e [`estados.csv`](https://github.com/jotapesp/database-for-school-management/blob/main/estados.csv) e os seguintes comandos devem ser executados:
+    ```mysql
+LOAD DATA LOCAL INFILE 'estados.csv'
+  	INTO TABLE state
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(@codigo_uf, @uf, @nome, @latitude, @longitude, @regiao)
+set idState = @codigo_uf, short = @uf, state_name = @nome;
+
+LOAD DATA LOCAL INFILE 'municipios.csv'
+	 INTO TABLE city
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(@codigo_ibge, @nome, @latitude, @longitude, @capital, @codigo_uf, @siafi_id, @ddd, @fuso_horario)
+set idCity = @codigo_ibge, city_name = @nome, state_idState = @codigo_uf;
+    ```
+  - [`script_queries.sql`](https://github.com/jotapesp/database-for-school-management/blob/main/script_queries.sql) - execute esse _script_ para extrair informações do Banco de Dados com a finalidade de testá-lo. As informações extraídas pelas queries contidas nesse _script_ são descritas mais adiante.
 
 ### Descrição do Banco de Dados
 
-* [`diagramaEER`](https://github.com/jotapesp/database-for-school-management) - Esse arquivo contido no repositório contém o modelo lógico completo do banco de dados, a imagem abaixo é um screenshot desse modelo:
-[![Modelo Lógico](https://i.imgur.com/ULDIRfe.png)](https://github.com/jotapesp/database-for-school-management)
+* [`diagramaEER`](https://github.com/jotapesp/database-for-school-management/blob/main/diagramaEER.mwb) - Esse arquivo contido no repositório contém o modelo lógico completo do banco de dados, a imagem abaixo é um screenshot desse modelo:
+[![Modelo Lógico](https://i.imgur.com/ULDIRfe.png)](https://github.com/jotapesp/database-for-school-management/blob/main/school_mod_logico.png)
 
 * Tabelas
 
@@ -70,7 +88,7 @@ Esse é o projeto de Banco de Dados para gerenciamento escolar inicialmente conf
 
 ### Recuperação dos dados através das _Queries_ pré-definidas em _script_
 
-* O _script_ [`script_queries.sql`](https://github.com/jotapesp/database-for-school-management) foi criado com algumas _queries_ que retornam dados armazenados, e essas são:
+* O _script_ [`script_queries.sql`](https://github.com/jotapesp/database-for-school-management/blob/main/script_queries.sql) foi criado com algumas _queries_ que retornam dados armazenados, e essas são:
   - 1. Recupera informações sobre o boletim de um aluno específico através do nome completo dele. O exemplo segue os dados inseridos no _script_ de persistência dos dados.
 
   - 2. Busca os cursos os quais um aluno específico está matriculado.
