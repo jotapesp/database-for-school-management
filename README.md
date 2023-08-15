@@ -15,7 +15,7 @@ Esse é o projeto de Banco de Dados para gerenciamento escolar inicialmente conf
   - [`script_criarDB.sql`](https://github.com/jotapesp/database-for-school-management/blob/main/script_criarDB.sql) - execute esse _script_ em um servidor MySQL para criar o Banco de Dados chamado `school` populado com as tabelas que serão descritas mais adiante.
   - [`script_persistenciadedados.sql`](https://github.com/jotapesp/database-for-school-management/blob/main/script_persistenciadedados.sql) - execute esse _script_ para popular o Banco de Dados com dados fictícios afim de testá-lo. Executar o _script_ por completo alimentará todo o banco de dados com informações para teste, como dados fictícios de pessoas (alunos, responsáveis, professores), matérias, cursos ofertados, notas, etc (tudo que é necessário para testar o banco de dados).
     - ATENÇÃO: a persistência de dados para as tabelas Cidade e Estado pode ser feita de maneiras diferentes. Enquanto que o padrão do _script_ é adicionar apenas os dados necessários para as _queries_ em [`script_queries.sql`](https://github.com/jotapesp/database-for-school-management/blob/main/script_queries.sql), existem também 2 arquivos extras nesse repositório, [`municipios.csv`](https://github.com/jotapesp/database-for-school-management/blob/main/municipios.csv) e [`estados.csv`](https://github.com/jotapesp/database-for-school-management/blob/main/estados.csv), que contem informações de todas as cidades e estados do Brasil. Caso deseje alimentar o banco de dados com essas informações, uma instrução extra está contida no arquivo [`script_persistenciadedados.sql`](https://github.com/jotapesp/database-for-school-management/blob/main/script_persistenciadedados.sql). O usuário deve realizar o download dos arquivos [`municipios.csv`](https://github.com/jotapesp/database-for-school-management/blob/main/municipios.csv) e [`estados.csv`](https://github.com/jotapesp/database-for-school-management/blob/main/estados.csv) e os seguintes comandos devem ser executados:
-    ```mysql
+```mysql
 LOAD DATA LOCAL INFILE 'estados.csv'
   	INTO TABLE state
 FIELDS TERMINATED BY ','
@@ -30,8 +30,8 @@ FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
 (@codigo_ibge, @nome, @latitude, @longitude, @capital, @codigo_uf, @siafi_id, @ddd, @fuso_horario)
-set idCity = @codigo_ibge, city_name = @nome, state_idState = @codigo_uf;
-    ```
+set idCity = @codigo_ibge, city_name = @nome, state_idState = @codigo_uf;```
+
   - [`script_queries.sql`](https://github.com/jotapesp/database-for-school-management/blob/main/script_queries.sql) - execute esse _script_ para extrair informações do Banco de Dados com a finalidade de testá-lo. As informações extraídas pelas queries contidas nesse _script_ são descritas mais adiante.
 
 ### Descrição do Banco de Dados
